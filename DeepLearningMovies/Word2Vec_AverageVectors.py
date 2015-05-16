@@ -21,15 +21,9 @@ import logging
 import numpy as np  # Make sure that numpy is imported
 from gensim.models import Word2Vec
 from sklearn.ensemble import RandomForestClassifier
-<<<<<<< HEAD
-
 from KaggleWord2VecUtility import KaggleWord2VecUtility
 from sklearn.preprocessing import Imputer
-=======
-from sklearn.preprocessing import Imputer
-from KaggleWord2VecUtility import KaggleWord2VecUtility
 
->>>>>>> 952c9b01f330dfefb66c2c5331949e0e81203c4b
 
 # ****** Define functions to create average word vectors
 #
@@ -117,21 +111,12 @@ if __name__ == '__main__':
     sentences = []  # Initialize an empty list of sentences
 
     print "Parsing sentences from training set"
-<<<<<<< HEAD
 #    for review in train["review"]:
 #        sentences += KaggleWord2VecUtility.review_to_sentences(review, tokenizer)
 
     print "Parsing sentences from unlabeled set"
-#    for review in unlabeled_train["review"]:
-#        sentences += KaggleWord2VecUtility.review_to_sentences(review, tokenizer)
-=======
     #for review in train["review"]:
      #   sentences += KaggleWord2VecUtility.review_to_sentences(review, tokenizer)
-
-    print "Parsing sentences from unlabeled set"
-    #for review in unlabeled_train["review"]:
-     #   sentences += KaggleWord2VecUtility.review_to_sentences(review, tokenizer)
->>>>>>> 952c9b01f330dfefb66c2c5331949e0e81203c4b
 
     # ****** Set parameters and train the word2vec model
     #
@@ -149,7 +134,6 @@ if __name__ == '__main__':
 
     # Initialize and train the model (this will take some time)
     print "Training Word2Vec model..."
-<<<<<<< HEAD
 #    model = Word2Vec(sentences, workers=num_workers, \
  #               size=num_features, min_count = min_word_count, \
   #              window = context, sample = downsampling, seed=1)
@@ -157,24 +141,11 @@ if __name__ == '__main__':
     # If you don't plan to train the model any further, calling
     # init_sims will make the model much more memory-efficient.
    # model.init_sims(replace=True)
-=======
-    # model = Word2Vec(sentences, workers=num_workers, \
-     #           size=num_features, min_count = min_word_count, \
-      #          window = context, sample = downsampling, seed=1)
-
-    # If you don't plan to train the model any further, calling
-    # init_sims will make the model much more memory-efficient.
-    #model.init_sims(replace=True)
->>>>>>> 952c9b01f330dfefb66c2c5331949e0e81203c4b
 
     # It can be helpful to create a meaningful model name and
     # save the model for later use. You can load it later using Word2Vec.load()
     model_name = "300features_40minwords_10context"
-<<<<<<< HEAD
-#    model.save(model_name)
-=======
     #model.save(model_name)
->>>>>>> 952c9b01f330dfefb66c2c5331949e0e81203c4b
     model = Word2Vec.load(model_name)
 
     model.doesnt_match("man woman child kitchen".split())
@@ -191,7 +162,6 @@ if __name__ == '__main__':
     print "Creating average feature vecs for training reviews"
 
     trainDataVecs = getAvgFeatureVecs( getCleanReviews(train), model, num_features )
-<<<<<<< HEAD
 
     print "Creating average feature vecs for test reviews"
 
@@ -204,28 +174,12 @@ if __name__ == '__main__':
     #
     # Fit a random forest to the training data, using 100 trees
     forest = RandomForestClassifier( n_estimators = 100 )
-=======
-    trainDataVecs = Imputer().fit_transform(trainDataVecs)
-    print trainDataVecs
-    print "Creating average feature vecs for test reviews"
-
-    testDataVecs = getAvgFeatureVecs( getCleanReviews(test), model, num_features )
-    testDataVecs = Imputer().fit_transform(testDataVecs)
-    # ****** Fit a random forest to the training set, then make predictions
-    #
-    # Fit a random forest to the training data, using 100 trees
-    forest = RandomForestClassifier( n_estimators = 50 )
->>>>>>> 952c9b01f330dfefb66c2c5331949e0e81203c4b
 
     print "Fitting a random forest to labeled training data..."
     forest = forest.fit( trainDataVecs, train["sentiment"] )
 
     # Test & extract results
-<<<<<<< HEAD
     print 'Start Prediction'
-=======
-    print 'Start Predicting'
->>>>>>> 952c9b01f330dfefb66c2c5331949e0e81203c4b
     result = forest.predict( testDataVecs )
 
     # Write the test results
