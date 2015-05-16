@@ -19,7 +19,8 @@ import numpy as np
 if __name__ == '__main__':
     train = pd.read_csv(os.path.join(os.path.dirname(__file__), 'data', 'labeledTrainData.tsv'), header=0, \
                     delimiter="\t", quoting=3)
-    test = pd.read_csv(os.path.join(os.path.dirname(__file__), 'data', 'testData.tsv'), header=0, delimiter="\t", \
+    print 'done'
+    test = pd.read_csv(os.path.join(os.path.dirname(__file__), 'data', 'out'), header=0, delimiter="\t", \
                    quoting=3 )
 
     print 'The first review is:'
@@ -90,7 +91,7 @@ if __name__ == '__main__':
 
     # Get a bag of words for the test set, and convert to a numpy array
     test_data_features = vectorizer.transform(clean_test_reviews)
-    test_data_features = test_data_features.toarray()
+    test_data_features = test_data_features.toarray() 
 
     # Use the random forest to make sentiment label predictions
     print "Predicting test labels...\n"
@@ -103,5 +104,10 @@ if __name__ == '__main__':
     # Use pandas to write the comma-separated output file
     output.to_csv(os.path.join(os.path.dirname(__file__), 'data', 'Bag_of_Words_model.csv'), index=False, quoting=3)
     print "Wrote results to Bag_of_Words_model.csv"
+
+
+    print 'calculating error rate'
+
+    print result
 
 
