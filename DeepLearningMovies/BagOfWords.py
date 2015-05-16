@@ -20,12 +20,12 @@ if __name__ == '__main__':
     train = pd.read_csv(os.path.join(os.path.dirname(__file__), 'data', 'labeledTrainData.tsv'), header=0, \
                     delimiter="\t", quoting=3)
     print 'done'
-    test = pd.read_csv(os.path.join(os.path.dirname(__file__), 'data', 'out'), header=0, delimiter="\t", \
-                   quoting=3 )
+    #test = pd.read_csv(os.path.join(os.path.dirname(__file__), 'data', 'out.tsv'), header=0, delimiter="\t", \
+#                   quoting=3 )
 
-    print 'The first review is:'
-    print train["review"][0]
-
+    #print 'The first review is:'
+    #print train["review"][0]
+    #print test
     raw_input("Press Enter to continue...")
 
 
@@ -34,13 +34,18 @@ if __name__ == '__main__':
 
     # Initialize an empty list to hold the clean reviews
     clean_train_reviews = []
+    clean_test_reviews = []
 
     # Loop over each review; create an index i that goes from 0 to the length
     # of the movie review list
 
     print "Cleaning and parsing the training set movie reviews...\n"
     for i in xrange( 0, len(train["review"])):
-        clean_train_reviews.append(" ".join(KaggleWord2VecUtility.review_to_wordlist(train["review"][i], True)))
+        if( i < len(train['review'])-5000):
+            clean_train_reviews.append(" ".join(KaggleWord2VecUtility.review_to_wordlist(train["review"][i], True)))
+        else:
+            clean_test_reviews.append(" ".join(KaggleWord2VecUtility.review_to_wordlist(train["review"][i], True)))
+            
     print clean_train_reviews[0]
 
     # ****** Create a bag of words from the training set
@@ -54,7 +59,7 @@ if __name__ == '__main__':
                              tokenizer = None,    \
                              preprocessor = None, \
                              stop_words = None,   \
-                             max_features = 500)
+                             max_features = 4000 )
 
     # fit_transform() does two functions: First, it fits the model
     # and learns the vocabulary; second, it transforms our training data
@@ -78,20 +83,21 @@ if __name__ == '__main__':
     # features and the sentiment labels as the response variable
     #
     # This may take a few minutes to run
-    forest = forest.fit( train_data_features, train["sentiment"] )
+    forest = forest.fit( train_data_features, train["sentiment"][: (len(train['sentiment'])-5000)] )
 
 
 
     # Create an empty list and append the clean reviews one by one
-    clean_test_reviews = []
+    #clean_test_reviews = []
 
     print "Cleaning and parsing the test set movie reviews...\n"
-    for i in xrange(0,len(test["review"])):
-        clean_test_reviews.append(" ".join(KaggleWord2VecUtility.review_to_wordlist(test["review"][i], True)))
+    #for i in xrange(0,len(test["review"])):
+     #   clean_test_reviews.append(" ".join(KaggleWord2VecUtility.review_to_wordlist(test["review"][i], True)))
 
     # Get a bag of words for the test set, and convert to a numpy array
     test_data_features = vectorizer.transform(clean_test_reviews)
     test_data_features = test_data_features.toarray() 
+
 
     # Use the random forest to make sentiment label predictions
     print "Predicting test labels...\n"
@@ -99,15 +105,18 @@ if __name__ == '__main__':
 
     # Copy the results to a pandas dataframe with an "id" column and
     # a "sentiment" column
-    output = pd.DataFrame( data={"id":test["id"], "sentiment":result} )
+    #output = pd.DataFrame( data={"id":test["id"], "sentiment":result} )
 
     # Use pandas to write the comma-separated output file
-    output.to_csv(os.path.join(os.path.dirname(__file__), 'data', 'Bag_of_Words_model.csv'), index=False, quoting=3)
+    #output.to_csv(os.path.join(os.path.dirname(__file__), 'data', 'Bag_of_Words_model.csv'), index=False, quoting=3)
     print "Wrote results to Bag_of_Words_model.csv"
 
 
     print 'calculating error rate'
-
-    print result
-
+    error = 0
+    for i in range(5000):
+        if( result[i] != train['sentiment'][20000+i]):
+            error += 1
+    print error
+    print 'error rate is :' ,  error/5000.0
 

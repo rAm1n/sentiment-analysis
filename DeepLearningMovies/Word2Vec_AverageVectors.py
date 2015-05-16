@@ -163,11 +163,12 @@ if __name__ == '__main__':
 
     trainDataVecs = getAvgFeatureVecs( getCleanReviews(train), model, num_features )
     trainDataVecs = Imputer().fit_transform(trainDataVecs)
-    print trainDataVecs
+    #print trainDataVecs
     print "Creating average feature vecs for test reviews"
 
-    testDataVecs = getAvgFeatureVecs( getCleanReviews(test), model, num_features )
-    testDataVecs = Imputer().fit_transform(testDataVecs)
+    #testDataVecs = getAvgFeatureVecs( getCleanReviews(test), model, num_features )
+    #testDataVecs = Imputer().fit_transform(testDataVecs)
+
     # ****** Fit a random forest to the training set, then make predictions
     #
     # Fit a random forest to the training data, using 100 trees
@@ -181,6 +182,6 @@ if __name__ == '__main__':
     result = forest.predict( testDataVecs )
 
     # Write the test results
-    output = pd.DataFrame( data={"id":test["id"], "sentiment":result} )
-    output.to_csv( "Word2Vec_AverageVectors.csv", index=False, quoting=3 )
+    #output = pd.DataFrame( data={"id":test["id"], "sentiment":result} )
+    #output.to_csv( "Word2Vec_AverageVectors.csv", index=False, quoting=3 )
     print "Wrote Word2Vec_AverageVectors.csv"
