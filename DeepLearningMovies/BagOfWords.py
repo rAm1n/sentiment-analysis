@@ -1,14 +1,5 @@
 #!/usr/bin/env python
 
-#  Author: Angela Chapman
-#  Date: 8/6/2014
-#
-#  This file contains code to accompany the Kaggle tutorial
-#  "Deep learning goes to the movies".  The code in this file
-#  is for Part 1 of the tutorial on Natural Language Processing.
-#
-# *************************************** #
-
 import os
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.ensemble import RandomForestClassifier

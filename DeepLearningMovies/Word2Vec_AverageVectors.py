@@ -1,14 +1,5 @@
 #!/usr/bin/env python
 
-#  Author: Angela Chapman
-#  Date: 8/6/2014
-#
-#  This file contains code to accompany the Kaggle tutorial
-#  "Deep learning goes to the movies".  The code in this file
-#  is for Parts 2 and 3 of the tutorial, which cover how to
-#  train a model using Word2Vec.
-#
-# *************************************** #
 
 
 # ****** Read the two training sets and the test set

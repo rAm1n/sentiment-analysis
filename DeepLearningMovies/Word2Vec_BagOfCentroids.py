@@ -1,16 +1,5 @@
 #!/usr/bin/env python
 
-#  Author: Angela Chapman
-#  Date: 8/6/2014
-#
-#  This file contains code to accompany the Kaggle tutorial
-#  "Deep learning goes to the movies".  The code in this file
-#  is for Part 2 of the tutorial and covers Bag of Centroids
-#  for a Word2Vec model. This code assumes that you have already
-#  run Word2Vec and saved a model called "300features_40minwords_10context"
-#
-# *************************************** #
-
 
 # Load a pre-trained model
 from gensim.models import Word2Vec
